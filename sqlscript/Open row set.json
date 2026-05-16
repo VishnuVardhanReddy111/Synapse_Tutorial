@@ -1,0 +1,17 @@
+{
+	"name": "Open row set",
+	"properties": {
+		"content": {
+			"query": "-- Create credential\ncreate DATABASE SCOPED CREDENTIAL vishnucreds\nwith \n    IDENTITY = 'Managed Identity'\n\n    -- ----------------------------\n\n-- External data source\nCREATE EXTERNAL data SOURCE raw_ext_source\nwith (\n    LOCATION = 'https://synapsedatalakevishnu.dfs.core.windows.net/raw/',\n    CREDENTIAL = vishnucreds\n)\n-- -------------------------\n\n-- External File Format\nCREATE EXTERNAL FILE FORMAT csv_format\nWITH (\n    FORMAT_TYPE = DELIMITEDTEXT,\n    FORMAT_OPTIONS (\n        FIELD_TERMINATOR = ''\n    )\n)\n-- -------------------------\n-- ----------------------------\n\n-- OpenRow set function\n\n\nSELECT *\nFROM OPENROWSET(\n    BULK 'revenue',\n    DATA_SOURCE = 'raw_ext_source',\n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE\n) AS query1;\n\n\n-- Create parquet filr format\ncreate EXTERNAL file FORMAT parquet_format\nwith\n(\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\n---------------------------------\n\n\n\n\n-- -----------------------------",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "vishnuserverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

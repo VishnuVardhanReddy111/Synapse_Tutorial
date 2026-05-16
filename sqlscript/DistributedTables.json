@@ -1,0 +1,17 @@
+{
+	"name": "DistributedTables",
+	"properties": {
+		"content": {
+			"query": "-- Round Robin Table\n--------------------------------\n\ncreate table round_table\n(\n    id int,\n    name varchar(4000),\n    salary int\n)\nwith (\n    DISTRIBUTION = ROUND_ROBIN\n);\n\nINSERT INTO round_table\nVALUES\n(1,'Vishnu',50)\n\nselect * from round_table\n-- ------------------------------------\n-- Replicate table\n--------------------------------\n\ncreate schema gold\n\ncreate table gold.dim_product\n(\n    dim_key_prod int,\n    prod_id INT,\n    prod_name varchar(4000)\n)\nWITH\n(\n    DISTRIBUTION = REPLICATE\n)\n\n-- --------------------------------------------\n-- Hash Distribution\n\ncreate table gold.facttable\n(\n    dim_key_prod int,\n    revenue int,\n    cost int\n)\nWITH(\n    DISTRIBUTION = HASH(dim_key_prod)\n)\n\n\n\n\n\n\n\n\n\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "vishnudedicatedpool",
+				"poolName": "vishnudedicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

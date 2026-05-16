@@ -1,0 +1,17 @@
+{
+	"name": "POLY BASE",
+	"properties": {
+		"content": {
+			"query": "create EXTERNAL TABLE parquet_table\n(\n    Dealer_ID VARCHAR(4000),\n    Model_ID VARCHAR(4000),\n    Branch_ID VARCHAR(4000),\n    Date_ID VARCHAR(4000),\n    Units_Sold BIGINT,\n    Revenue BIGINT\n)\nWITH\n(\n    LOCATION = '/cetas_revenue',\n    DATA_SOURCE = raw_ext_source_abfss1,\n    FILE_FORMAT = parquet_format\n)\n\n-- CTAS (BASE)\n\nCREATE table poly_table\nwith \n(\n    DISTRIBUTION = ROUND_ROBIN\n)\nAS\nselect * from parquet_table\n\n\nselect * from poly_table",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "vishnudedicatedpool",
+				"poolName": "vishnudedicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

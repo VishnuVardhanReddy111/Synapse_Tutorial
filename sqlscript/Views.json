@@ -1,0 +1,17 @@
+{
+	"name": "Views",
+	"properties": {
+		"content": {
+			"query": "-- VIEWS\n\ncreate view revenue_view\nAS\nSELECT *\nFROM OPENROWSET(\n    BULK 'revenue',\n    DATA_SOURCE = 'raw_ext_source',\n    FORMAT = 'CSV',\n    PARSER_VERSION = '2.0',\n    HEADER_ROW = TRUE\n) AS query1;\n\nselect * from revenue_view\n\nselect * from revenue_cetas\n\n\n\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "vishnuserverless",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

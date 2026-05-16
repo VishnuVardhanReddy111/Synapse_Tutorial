@@ -1,0 +1,17 @@
+{
+	"name": "External res",
+	"properties": {
+		"content": {
+			"query": "-- Create credential\ncreate DATABASE SCOPED CREDENTIAL vishnucreds\nwith \n    IDENTITY = 'Managed Identity'\n\n    -- ----------------------------\n\n-- External data source\nCREATE EXTERNAL data SOURCE raw_ext_source_abfss1\nwith (\n    LOCATION = 'abfss://raw@synapsedatalakevishnu.dfs.core.windows.net',\n    CREDENTIAL = vishnucreds\n)\n\nCREATE EXTERNAL data SOURCE raw_ext_source\nwith (\n    LOCATION = 'https://synapsedatalakevishnu.dfs.core.windows.net/raw/',\n    CREDENTIAL = vishnucreds\n)\n-- -------------------------\n\n-- Create parquet filr format\ncreate EXTERNAL file FORMAT parquet_format\nwith\n(\n    FORMAT_TYPE = PARQUET,\n    DATA_COMPRESSION = 'org.apache.hadoop.io.compress.SnappyCodec'\n)\n\n---------------------------------\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "vishnudedicatedpool",
+				"poolName": "vishnudedicatedpool"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
